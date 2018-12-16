@@ -1,9 +1,9 @@
 package com.crudapi.tasks.controller;
 
-import com.crudapi.tasks.domain.CreatedTrelloCard;
+import com.crudapi.tasks.domain.CreatedTrelloCardDto;
 import com.crudapi.tasks.domain.TrelloBoardDto;
 import com.crudapi.tasks.domain.TrelloCardDto;
-import com.crudapi.tasks.trello.client.TrelloClient;
+import com.crudapi.tasks.service.TrelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +16,12 @@ import java.util.List;
 public class TrelloController {
 
     @Autowired
-    private TrelloClient trelloClient;
+    private TrelloService trelloService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
+    @RequestMapping(method = RequestMethod.GET, value = "/getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
 
-        return trelloClient.getTrelloBoards();
+        return trelloService.fetchTrelloBoards();
 
     /*
         List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoards();
@@ -47,9 +47,9 @@ public class TrelloController {
     }
 
 
-    @RequestMapping(method=RequestMethod.POST, value = "createTrelloCard")
-    public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
-        return trelloClient.createNewCard(trelloCardDto);
+    @RequestMapping(method=RequestMethod.POST, value = "/createTrelloCard")
+    public CreatedTrelloCardDto createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
+        return trelloService.createdTrelloCard(trelloCardDto);
     }
 
 
